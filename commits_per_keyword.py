@@ -161,6 +161,9 @@ def plot_commits(keywords, repo_paths, branches,
                 for m in commits_month.index
             ]
 
+            # Count unique authors of matched commits
+            unique_authors = len({c.author.name for c in matched_commits})
+
             plot_data.append({
                 "label": f"{repo_name}:{branch}",
                 "week_dates": week_dates,
@@ -169,8 +172,8 @@ def plot_commits(keywords, repo_paths, branches,
                 "commits_month": commits_month.values,
                 "week_labels": week_labels,
                 "month_labels": month_labels,
-                "week_label_with_total": f"{repo_name}:{branch} ({commits_week.sum()})",
-                "month_label_with_total": f"{repo_name}:{branch} ({commits_month.sum()})"
+                "week_label_with_total": (f"{repo_name}:{branch} (commits:{commits_week.sum()}, authors:{unique_authors})"),
+                "month_label_with_total": (f"{repo_name}:{branch} (commits:{commits_month.sum()}, authors:{unique_authors})")
             })
 
     if not plot_data:
